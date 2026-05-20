@@ -60,10 +60,10 @@ if st.session_state.user==None:
     login,signup = st.tabs(
             ["Login","SignUp"]
          )
-    with login:
-        login()
     with signup:
         signup()
+    with login:
+        login()
 else:
     dashboard()        
 
