@@ -36,6 +36,7 @@ def login():
             login_user=cursor.fetchone()
             st.session_state.user=login_user
             st.write("logged in successfully")
+            st.rerun()
 
 
 
