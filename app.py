@@ -29,7 +29,7 @@ def dashboard():
             elif "audio" in choosen_file:
                 st.audio(choosen_file)
             if st.button("upload files to cloudinary"):
-                uploaded_url_obj=cloudinary.uploader.upload(choosen_file,rescourse_type="auto")
+                uploaded_url_obj=cloudinary.uploader.upload(choosen_file,resource_type="auto")
                 url=uploaded_url_obj["secure_url"]
                 st.write(url)
                 st.write("file uploaded successfully")
