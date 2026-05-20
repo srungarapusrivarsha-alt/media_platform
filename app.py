@@ -1,6 +1,14 @@
 import streamlit as st 
 from db_c import conn,cursor
+import cloudinary
+import cloudinary.uploader
 st.title("Media Platform")
+cloudinary.config(
+    cloud_name=st.secrets["cloud_name"],
+    api_key=st.secrets["api_key"],
+    api_secret=st.secrets["api_secret"]
+)
+
 
 
 if "user" not in st.session_state:
@@ -20,7 +28,12 @@ def dashboard():
                 st.video(choosen_file)
             elif "audio" in choosen_file:
                 st.audio(choosen_file)
-
+            if st.button("upload files to cloudinary"):
+                uploaded_url_obj=cloudinary.uploader.upload(choosen_file,rescourse_type="auto")
+                url=uploaded_url_obj["secure url"]
+                st.write(url)
+                st.write("file uploaded successfully")
+                st.rerun()
 
         
 def login_function():
@@ -56,6 +69,7 @@ def signup_function():
             cursor.execute(query,values)
             conn.commit()
             st.write("students added successfully")
+            st.rerun()
 
 if st.session_state.user==None:               
     login,signup = st.tabs(
