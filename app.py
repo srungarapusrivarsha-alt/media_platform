@@ -2,13 +2,6 @@ import streamlit as st
 from db_c import conn,cursor
 st.title("Media Platform")
 
-login,signup = st.tabs(
-    ["Login","SignUp"]
-)
-# cursor.execute("show tables")
-# dbs=cursor.fetchall()
-# for i in dbs:
-#     st.write(dbs)
 
 if "user" not in st.session_state:
     st.session_state.user=None
@@ -27,7 +20,7 @@ def dashboard():
             st.video(choosen_file)
         elif "audio" in choosen_file:
             st.audio(choosen_file)
-            
+
 
         
 def login():
