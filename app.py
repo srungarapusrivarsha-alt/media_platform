@@ -10,20 +10,20 @@ def dashboard():
     option=st.sidebar.selectbox("choose here:--",["upload_files","view_files","logout"])
     st.header("welcome!!")
     if option=="upload_files":
-        choosen_file=st.header("upload your file here",type=["pdf","png","jpg","mp3","mp4"])
+        choosen_file=st.file_uploader("upload your file here",type=["pdf","png","jpg","mp3","mp4"])
         if choosen_file:
             st.write(choosen_file.name)
             st.write(choosen_file.type)
-        if "image" in choosen_file.type:
-            st.image(choosen_file)
-        elif "video" in choosen_file.type:
-            st.video(choosen_file)
-        elif "audio" in choosen_file:
-            st.audio(choosen_file)
+            if "image" in choosen_file.type:
+                 st.image(choosen_file)
+            elif "video" in choosen_file.type:
+                st.video(choosen_file)
+            elif "audio" in choosen_file:
+                st.audio(choosen_file)
 
 
         
-def login():
+def login_function():
     st.header("Login")
     with st.form("Login_Form"):
         email = st.text_input("Email")
@@ -40,7 +40,7 @@ def login():
 
 
 
-def signup():
+def signup_function():
     st.header("SignUp")
 
     with st.form("SignUp_Form"):
@@ -56,14 +56,15 @@ def signup():
             cursor.execute(query,values)
             conn.commit()
             st.write("students added successfully")
+
 if st.session_state.user==None:               
     login,signup = st.tabs(
             ["Login","SignUp"]
          )
     with signup:
-        signup()
+        signup_function()
     with login:
-        login()
+        login_function()
 else:
     dashboard()        
 
