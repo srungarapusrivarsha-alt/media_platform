@@ -34,7 +34,7 @@ def dashboard():
                 st.write(url)
                 st.write("file uploaded successfully")
     elif option=="logout":
-        st.session_state.user==None
+        st.session_state.user=None
         st.success("logged out successfully....")
         st.rerun()                
 
