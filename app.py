@@ -25,4 +25,10 @@ with signup:
         password = st.text_input("Password", type="password")
 
         btn = st.form_submit_button("SignUp")
+        if btn:
+            query="insert into table users(name,email,password)values(%S,%S,%S)"
+            values=(name,email,password)
+            cursor.execute(query,values)
+            conn.commit()
+            st.write("students added successfully")
             
