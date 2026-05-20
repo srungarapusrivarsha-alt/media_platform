@@ -33,7 +33,7 @@ def dashboard():
                 url=uploaded_url_obj["secure_url"]
                 st.write(url)
                 st.write("file uploaded successfully")
-                st.rerun()
+                
 
         
 def login_function():
