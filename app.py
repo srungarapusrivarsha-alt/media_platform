@@ -26,9 +26,9 @@ with signup:
 
         btn = st.form_submit_button("SignUp")
         if btn:
-            query="insert into table users(name,email,password)values(%S,%S,%S)"
+            query="insert into users(name,email,password)values(%s , %s , %s)"
             values=(name,email,password)
             cursor.execute(query,values)
             conn.commit()
             st.write("students added successfully")
-            
+
