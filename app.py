@@ -5,6 +5,10 @@ st.title("Media Platform")
 login,signup = st.tabs(
     ["Login","SignUp"]
 )
+cursor.execute("show tables")
+dbs=cursor.fetchall()
+for i in dbs:
+    st.write(dbs)
 
 
 with login:
