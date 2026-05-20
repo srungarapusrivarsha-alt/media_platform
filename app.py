@@ -5,21 +5,48 @@ st.title("Media Platform")
 login,signup = st.tabs(
     ["Login","SignUp"]
 )
-cursor.execute("show tables")
-dbs=cursor.fetchall()
-for i in dbs:
-    st.write(dbs)
+# cursor.execute("show tables")
+# dbs=cursor.fetchall()
+# for i in dbs:
+#     st.write(dbs)
 
+if "user" not in st.session_state:
+    st.session_state.user=None
+def dashboard():
+    st.sidebar.success("Hello User")
+    option=st.sidebar.selectbox("choose here:--",["upload_files","view_files","logout"])
+    st.header("welcome!!")
+    if option=="upload_files":
+        choosen_file=st.header("upload your file here",type=["pdf","png","jpg","mp3","mp4"])
+        if choosen_file:
+            st.write(choosen_file.name)
+            st.write(choosen_file.type)
+        if "image" in choosen_file.type:
+            st.image(choosen_file)
+        elif "video" in choosen_file.type:
+            st.video(choosen_file)
+        elif "audio" in choosen_file:
+            st.audio(choosen_file)
+            
 
-with login:
+        
+def login():
     st.header("Login")
     with st.form("Login_Form"):
         email = st.text_input("Email")
         password = st.text_input("Password",type="password")
         btn=st.form_submit_button("Login")
+        if btn:
+            query="select * from users where email=%s and password=%s"
+            values=(email,password)
+            cursor.execute(query,values)
+            login_user=cursor.fetchone()
+            st.session_state.user=login_user
+            st.write("logged in successfully")
 
 
-with signup:
+
+def signup():
     st.header("SignUp")
 
     with st.form("SignUp_Form"):
@@ -35,4 +62,17 @@ with signup:
             cursor.execute(query,values)
             conn.commit()
             st.write("students added successfully")
+if st.session_state.user==None:               
+    login,signup = st.tabs(
+            ["Login","SignUp"]
+         )
+    with login:
+        login()
+    with signup:
+        signup()
+else:
+    dashboard()        
+
+
+
 
