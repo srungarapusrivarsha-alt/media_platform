@@ -1,18 +1,20 @@
 import mysql.connector 
 import streamlit as st 
 
+def get_connection():
+    conn = mysql.connector.connect(
+        host=st.secrets["host"],
+        port=st.secrets["port"],
+        user=st.secrets["user"],
+        password=st.secrets["password"],
+        database=st.secrets["db"],
+        ssl_disabled=False
+    
+   )
 
-conn = mysql.connector.connect(
-    host=st.secrets["host"],
-    port=st.secrets["port"],
-    user=st.secrets["user"],
-    password=st.secrets["password"],
-    database=st.secrets["db"],
-    ssl_disabled=False
-)
-
-cursor=conn.cursor(dictionary=True) # 
-
+    cursor=conn.cursor(dictionary=True) 
+    return conn,cursor# 
+conn,cursor=get_connection()
 # USERS TABLE
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS users(

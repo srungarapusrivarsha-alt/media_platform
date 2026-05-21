@@ -1,5 +1,5 @@
 import streamlit as st 
-from db_c import conn,cursor
+from db_c import get_connection
 import cloudinary
 import cloudinary.uploader
 st.title("Media Platform")
@@ -46,10 +46,12 @@ def login_function():
         password = st.text_input("Password",type="password")
         btn=st.form_submit_button("Login")
         if btn:
+            conn, cursor = get_connection() 
             query="select * from users where email=%s and password=%s"
             values=(email,password)
             cursor.execute(query,values)
             login_user=cursor.fetchone()
+            conn.close()
             st.session_state.user=login_user
             st.write("logged in successfully")
             st.rerun()
@@ -67,10 +69,12 @@ def signup_function():
 
         btn = st.form_submit_button("SignUp")
         if btn:
+            conn, cursor = get_connection() 
             query="insert into users(name,email,password)values(%s , %s , %s)"
             values=(name,email,password)
             cursor.execute(query,values)
             conn.commit()
+            conn.close()
             st.write("students added successfully")
             st.rerun()
 
